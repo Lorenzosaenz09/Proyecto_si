@@ -12,8 +12,9 @@ app.use("/usuario", usuarioRouter);
 app.use("/mascota", mascotaRouter);
 app.get("/",holamundo);
 
-function holamundo(){
-    console.log("Hola mundo!")
+function holamundo(req, res){
+    console.log("Hola mundo!");
+    return res.status(200).json({message:"welcome to proyecto si!"})
 }
 
 const unknownEndpoint = (request, response) => {
