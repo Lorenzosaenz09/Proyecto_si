@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/usuario", usuarioRouter);
 app.use("/mascota", mascotaRouter);
-
+app.get("/","Hello mundo!")
 
 const unknownEndpoint = (request, response) => {
     let jsonResponse = {
@@ -27,7 +27,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => { console.log(`Local en http://localhost:${PORT}`);});
+// app.listen(PORT, () => { console.log(`Local en http://localhost:${PORT}`);});
 
 
 export default app;
