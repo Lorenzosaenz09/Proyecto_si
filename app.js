@@ -10,7 +10,11 @@ app.use(express.json());
 app.use(cors());
 app.use("/usuario", usuarioRouter);
 app.use("/mascota", mascotaRouter);
-app.get("/","Hello mundo!")
+app.get("/",holamundo);
+
+function holamundo(){
+    console.log("Hola mundo!")
+}
 
 const unknownEndpoint = (request, response) => {
     let jsonResponse = {
