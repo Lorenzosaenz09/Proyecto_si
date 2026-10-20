@@ -17,3 +17,10 @@ export async function getLike(id_mascota_1, id_mascota_2) {
         [id_mascota_1, id_mascota_2]
     )
 }
+
+export async function getLikeMutuo(id_mascota_1, id_mascota_2) {
+    return await pool.query(
+        'select * from "like" where id_mascota_1 = $1 and id_mascota_2 = $2',
+        [id_mascota_2, id_mascota_1]
+    )
+}
