@@ -7,15 +7,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lorenzosaenz09/Proyecto_Final.git"
+    "url": "git+https://github.com/Lorenzosaenz09/Proyecto_si.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lorenzosaenz09/Proyecto_Final/issues"
+    "url": "https://github.com/Lorenzosaenz09/Proyecto_si/issues"
   },
-  "homepage": "https://github.com/Lorenzosaenz09/Proyecto_Final#readme",
+  "homepage": "https://github.com/Lorenzosaenz09/Proyecto_si#readme",
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
