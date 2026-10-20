@@ -24,3 +24,9 @@ export async function getLikeMutuo(id_mascota_1, id_mascota_2) {
         [id_mascota_2, id_mascota_1]
     )
 }
+export async function deleteLike(id_mascota_1, id_mascota_2) {
+    return await pool.query(
+        'DELETE FROM "like" WHERE id_mascota_1 = $1 AND id_mascota_2 = $2 RETURNING id_like',
+        [id_mascota_1, id_mascota_2]
+    )
+}

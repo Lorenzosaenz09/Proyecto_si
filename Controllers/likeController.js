@@ -1,5 +1,5 @@
-import { insertLike, getLike, getLikeMutuo } from '../Services/likeService.js';
-import { insertMatch } from '../Services/matchService.js';
+import { insertLike, getLike, getLikeMutuo, deleteLike } from '../Services/likeService.js';
+import { insertMatch, deleteMatch } from '../Services/matchService.js';
 
 export async function crearLike(req, res) {
 
@@ -51,5 +51,33 @@ export async function crearLike(req, res) {
     catch (err) {
         console.log("Error:", err)
         return res.status(500).json({message: err.message})
+    }
+}
+export async function sacarLike(req, res) {
+
+    const like = req.body;
+
+    if (!like.id_mascota_1 || !like.id_mascota_2)
+        return res.status(400).json({message:"Debes indicar las dos mascotas"});
+
+    try {
+        const result = await deleteLike(
+            like.id_mascota_1,
+            like.id_mascota_2
+        );
+
+        if (result.rowCount == 0)
+            return res.status(404).json({message:"Like inexistente"});
+
+        await deleteMatch(
+            like.id_mascota_1,
+            like.id_mascota_2
+        );
+
+        return res.status(200).json({message:"Like eliminado! Match eliminado si existía."});
+    }
+    catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({message: err.message});
     }
 }
