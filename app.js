@@ -4,6 +4,7 @@ import 'dotenv/config';
 import usuarioRouter from './Routes/usuarioRouter.js';
 import mascotaRouter from './Routes/mascotaRouter.js';
 import likeRouter from './Routes/likeRouter.js';
+import comentarioRouter from './Routes/comentarioRouter.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use("/usuario", usuarioRouter);
 app.use("/mascota", mascotaRouter);
 app.use("/like", likeRouter);
+app.use("/comentario", comentarioRouter)
 app.get("/",holamundo);
 
 function holamundo(req, res){
