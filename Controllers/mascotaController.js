@@ -17,6 +17,7 @@ export async function crearMascota(req, res) {
             mascota.tamaño,
             mascota.color,
             mascota.ubicacion,
+            mascota.descripcion || null, 
             req.user_id
         );
 
