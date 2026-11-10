@@ -30,3 +30,10 @@ export async function deleteLike(id_mascota_1, id_mascota_2) {
         [id_mascota_1, id_mascota_2]
     )
 }
+
+export async function getLikesRecibidos(id_mascota) {
+    return await pool.query(
+        'SELECT * FROM "like" WHERE id_mascota_2 = $1 ORDER BY fecha DESC',
+        [id_mascota]
+    )
+}

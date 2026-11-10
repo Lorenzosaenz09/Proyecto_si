@@ -23,3 +23,21 @@ export async function getMascotas(especie, raza, sexo, tamaño, ubicacion, color
         [especie, raza, sexo, tamaño, ubicacion, color]
     )
 }
+
+export async function updateMascota(id_mascota, nombre, especie, raza, sexo, nacimiento, tamaño, color, ubicacion, descripcion, id_usuario) {
+    return await pool.query(
+        `UPDATE mascota
+        SET nombre = $1,
+            especie = $2,
+            raza = $3,
+            sexo = $4,
+            nacimiento = $5,
+            tamaño = $6,
+            color = $7,
+            ubicacion = $8,
+            descripcion = $9
+        WHERE id_mascota = $10 AND id_usuario = $11
+        RETURNING id_mascota`,
+        [nombre, especie, raza, sexo, nacimiento, tamaño, color, ubicacion, descripcion, id_mascota, id_usuario]
+    )
+}

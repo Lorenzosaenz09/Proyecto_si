@@ -1,4 +1,4 @@
-import { insertLike, getLike, getLikeMutuo, deleteLike } from '../Services/likeService.js';
+import { insertLike, getLike, getLikeMutuo, deleteLike, getLikesRecibidos } from '../Services/likeService.js';
 import { insertMatch, deleteMatch } from '../Services/matchService.js';
 
 export async function crearLike(req, res) {
@@ -75,6 +75,18 @@ export async function sacarLike(req, res) {
         );
 
         return res.status(200).json({message:"Like eliminado! Match eliminado si existía."});
+    }
+    catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({message: err.message});
+    }
+}
+export async function obtenerLikes(req, res) {
+
+    try {
+        const result = await getLikesRecibidos(req.params.id_mascota);
+
+        return res.status(200).json(result.rows);
     }
     catch (err) {
         console.log("Error:", err);
