@@ -1,4 +1,4 @@
-import { insertMascota, getMascotas, updateMascota } from '../Services/mascotaService.js';
+import { insertMascota, getMascotas, updateMascota, subirImagen, insertImagen, borrarMascotaCreada } from '../Services/mascotaService.js';
 
 export async function crearMascota(req, res) {
 
@@ -9,24 +9,38 @@ export async function crearMascota(req, res) {
 
     try {
         const result = await insertMascota(
-            mascota.nombre,
-            mascota.especie,
-            mascota.raza,
-            mascota.sexo,
-            mascota.nacimiento,
-            mascota.tamaño,
-            mascota.color,
-            mascota.ubicacion,
-            mascota.descripcion || null, 
-            req.user_id
-        );
+    mascota.nombre,
+    mascota.especie,
+    mascota.raza,
+    mascota.sexo,
+    mascota.nacimiento,
+    mascota.tamaño,
+    mascota.color,
+    mascota.ubicacion,
+    mascota.descripcion || null,
+    req.user_id
+);
 
-        console.log("result.rows", result.rows);
+const id_mascota = result.rows[0].id_mascota;
 
-        res.status(201).json({
-            message:"Mascota creada!",
-            id: result.rows[0].id_mascota
-        });
+const imagenes = req.files || [];
+
+try {
+    for (const imagen of imagenes) {
+        const url = await subirImagen(imagen, id_mascota);
+        await insertImagen(url, id_mascota);
+    }
+} catch (err) {
+    // Si no, al reintentar quedaría la mascota duplicada
+    await borrarMascotaCreada(id_mascota);
+    throw err;
+}
+
+return res.status(201).json({
+    message: "Mascota creada!",
+    id: id_mascota,
+    imagenes: imagenes.length
+});
     }
     catch (err) {
         console.log("Error:", err)
@@ -76,6 +90,11 @@ export async function editarMascota(req, res) {
 
         if (result.rowCount == 0)
             return res.status(404).json({message:"Mascota inexistente o no te pertenece"});
+
+        for (const imagen of req.files || []) {
+            const url = await subirImagen(imagen, id);
+            await insertImagen(url, id);
+        }
 
         return res.status(200).json({
             message:"Mascota actualizada!",
