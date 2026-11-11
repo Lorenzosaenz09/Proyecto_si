@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { insertUsuario, getUsuarioByMail } from '../Services/usuarioService.js';
+import { insertUsuario, getUsuarioByMail, getUsuarioById } from '../Services/usuarioService.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -67,5 +67,16 @@ export async function login(req, res) {
     catch (err) {
         console.log("Error:", err)
         return res.status(500).json({message: err.message})
+    }
+}
+export async function obtenerUsuario(req, res) {
+    try {
+        const result = await getUsuarioById(req.params.id);
+        if (result.rowCount == 0)
+            return res.status(404).json({message:"Usuario inexistente"});
+        return res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({message: err.message});
     }
 }

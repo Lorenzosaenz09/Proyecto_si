@@ -16,4 +16,11 @@ export async function getUsuarioByMail(mail) {
         "select id_usuario, contraseña from usuario where mail = $1", [mail] ) }
 
 
+ export async function getUsuarioById(id) {
+    return await pool.query(
+        "select id_usuario, nombre, apellido, mail, telefono from usuario where id_usuario = $1", [id]
+    );
+}
+
+
         
